@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Table;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreTableRequest;
 use App\Http\Requests\UpdateTableRequest;
 use Illuminate\Support\Facades\Log;
@@ -36,8 +35,8 @@ class TableController extends Controller
     {
         // The data is already validated by StoreTableRequest
         Table::create($request->validated());
-        Log::info('New table created: ' . $request->name);
-        return redirect()->route('tables.index')->with('success', 'Table created successfully.');
+        Log::info('New table created: ' . $request->{'name'});
+        return redirect()->route('tables.index')->with('success', 'Table créée avec succès.');
     }
 
     /**
@@ -45,7 +44,13 @@ class TableController extends Controller
      */
     public function show(Table $table)
     {
-        return view('tables.show', compact('table'));
+        $reservations = $table->reservations()
+            ->with('user')
+            ->orderBy('reservation_date', 'desc')
+            ->orderBy('reservation_time', 'desc')
+            ->paginate(10);
+
+        return view('tables.show', compact('table', 'reservations'));
     }
 
     /**
@@ -63,7 +68,7 @@ class TableController extends Controller
     {
         $table->update($request->validated());
         Log::info('Table updated: ' . $table->name);
-        return redirect()->route('tables.index')->with('success', 'Table updated successfully.');
+        return redirect()->route('tables.index')->with('success', 'Table mise à jour avec succès.');
     }
 
     /**
@@ -71,8 +76,18 @@ class TableController extends Controller
      */
     public function destroy(Table $table)
     {
+        $activeReservations = $table->reservations()
+            ->whereIn('status', ['pending', 'confirmed'])
+            ->count();
+
+        if ($activeReservations > 0) {
+            return redirect()->route('tables.index')
+                ->with('error', 'Impossible de supprimer cette table car elle a des réservations actives.');
+        }
+
+        $tableName = $table->name;
         $table->delete();
-        Log::warning('Table deleted: ' . $table->name);
-        return redirect()->route('tables.index')->with('success', 'Table deleted successfully.');
+        Log::warning('Table deleted: ' . $tableName);
+        return redirect()->route('tables.index')->with('success', 'Table supprimée avec succès.');
     }
 }

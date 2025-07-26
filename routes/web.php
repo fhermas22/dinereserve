@@ -1,8 +1,16 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
 
 //--- Route to the home page (Landing Page) ---//
 Route::get(
@@ -31,8 +39,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel'])->name('reservations.cancel');
 
     // Admin-specific routes //
-    Route::middleware(['can:admin'])->group(function () {
+    Route::middleware(['admin'])->group(function () {
+        // Table management
         Route::resource('tables', TableController::class);
+
+        // Administrative management of reservations
         Route::get('/admin/reservations', [
             ReservationController::class,
             'adminIndex'

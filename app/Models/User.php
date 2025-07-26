@@ -62,4 +62,12 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    /**
+    * Check if the user is a customer.
+    */
+    public function isCustomer(): bool
+    {
+        return $this->role === 'customer';
+    }
 }

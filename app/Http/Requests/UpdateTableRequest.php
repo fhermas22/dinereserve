@@ -4,15 +4,15 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
-class StoreTableRequest extends FormRequest
+class UpdateTableRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        // Only administrators can create tables
         return Auth::check() && Auth::user()->isAdmin();
     }
 
@@ -24,7 +24,7 @@ class StoreTableRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:tables,name'],
+            'name' => ['required', 'string', 'max:255', Rule::unique('tables')->ignore($this->{'table'})],
             'capacity' => ['required', 'integer', 'min:1', 'max:20'],
             'location' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:1000'],
@@ -33,10 +33,10 @@ class StoreTableRequest extends FormRequest
     }
 
     /**
-    * Get the error messages for the defined validation rules.
-    *
-    * @return array<string, string>
-    */
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
     public function messages(): array
     {
         return [
