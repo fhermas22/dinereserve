@@ -1,0 +1,25 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#F08A5D;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#B83B5E;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+
+    <!-- Circular background -->
+    <circle cx="32" cy="32" r="28" fill="url(#iconGradient)"/>
+
+    <!-- Central dish -->
+    <circle cx="32" cy="32" r="16" fill="white" opacity="0.9"/>
+    <circle cx="32" cy="32" r="12" fill="none" stroke="white" stroke-width="2"/>
+
+    <!-- Fork and Knife -->
+    <g transform="translate(26, 26)">
+        <!-- Fork -->
+        <path d="M2 2 L2 10 M1 2 L1 5 M2.5 2 L2.5 5 M4 2 L4 5" stroke="white" stroke-width="1.2" fill="none"/>
+
+        <!-- Knife -->
+        <path d="M8 2 L8 10 M8 2 L9.5 3.5 L8 5" stroke="white" stroke-width="1.2"
+        fill="none"/>
+    </g>
+</svg>

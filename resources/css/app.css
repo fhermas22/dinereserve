@@ -17,12 +17,24 @@
     @apply btn bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-300;
 }
 
+.btn-ghost {
+    @apply bg-transparent text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500;
+}
+
+.btn-outline {
+    @apply border-primary-600 text-primary-600 hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+}
+
 .btn-outline-primary {
     @apply btn border border-primary-500 text-primary-500 hover:bg-primary-50 hover:text-primary-600 focus:ring-primary-500;
 }
 
 .btn-danger {
     @apply btn bg-red-500 text-white hover:bg-red-600 focus:ring-red-500;
+}
+
+.btn-lg {
+    @apply px-8 py-4 text-lg;
 }
 
 .btn-sm {
@@ -158,3 +170,79 @@
 .modal-footer {
     @apply flex justify-end space-x-3;
 }
+
+/* Links */
+.nav-link {
+    @apply hover:text-primary-500 transition-colors;
+}
+
+
+/* Navigation (Landing Page) */
+@layer components {
+    .nav-link {
+        @apply text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200;
+    }
+    .mobile-menu-button {
+        @apply inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500;
+    }
+    .mobile-nav-link {
+        @apply block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50;
+    }
+}
+
+/* Service Cards */
+@layer components {
+    .service-card {
+        @apply bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1;
+    }
+    .service-icon {
+        @apply w-16 h-16 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center mb-6 transition-all duration-300 ease-in-out group-hover:bg-primary-600 group-hover:text-white;
+    }
+}
+
+/* Contact Info */
+@layer components {
+    .contact-info {
+        @apply flex items-start space-x-4;
+    }
+    .contact-icon {
+        @apply flex-shrink-0 w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center;
+    }
+}
+
+
+/* Animations (defined in welcome.blade.php <style> block for simplicity, but can be moved here) */
+
+.hero-pattern {
+    background-image:
+        radial-gradient(circle at 25px 25px, rgba(240, 138, 93, 0.1) 2px, transparent 0),
+        radial-gradient(circle at 75px 75px, rgba(184, 59, 94, 0.1) 2px, transparent 0);
+    background-size: 100px 100px;
+}
+
+.floating-animation {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }

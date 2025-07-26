@@ -3,20 +3,20 @@
 namespace App\View\Components;
 
 use Closure;
-use App\Models\Table;
+use App\Models\Reservation;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class TableCard extends Component
+class ReservationCard extends Component
 {
-    public Table $table;
+    public Reservation $reservation;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(Table $table)
+    public function __construct(Reservation $reservation)
     {
-        $this->table = $table;
+        $this->reservation = $reservation;
     }
 
     /**
@@ -24,6 +24,6 @@ class TableCard extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.table-card');
+        return view('components.reservation-card');
     }
 }
