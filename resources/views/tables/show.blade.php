@@ -34,7 +34,7 @@
 
                         @if($reservations->count() > 0)
                         <div class="space-y-4">
-                            @foreach($`reservations as `$reservation)
+                            @foreach($reservations as $reservation)
                             <div class="border border-gray-200 rounded-lg p-4">
                                 <div class="flex justify-between items-start">
                                     <div>

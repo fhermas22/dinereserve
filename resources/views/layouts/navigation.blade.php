@@ -6,7 +6,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="navbar-brand">
-                        {{ config('app.name', 'DineReserve') }}
+                        <img src="{{ asset('images/logo/dinereserve-logo.svg') }}" width="140" alt="DineReserve Logo">
+                        {{-- {{ config('app.name', 'DineReserve') }} --}}
                     </a>
                 </div>
 
@@ -15,12 +16,16 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Tableau de bord') }}
                     </x-nav-link>
+
+                    @can('customer')
                     <x-nav-link :href="route('reservations.index')" :active="request()->routeIs('reservations.*')">
                         {{ __('Mes Réservations') }}
                     </x-nav-link>
                     <x-nav-link :href="route('reservations.create')" :active="request()->routeIs('reservations.create')">
                         {{ __('Nouvelle Réservation') }}
                     </x-nav-link>
+                    @endcan
+
                     @can('admin')
                     <x-nav-link :href="route('tables.index')" :active="request()->routeIs('tables.*')">
                         {{ __('Gestion Tables') }}
