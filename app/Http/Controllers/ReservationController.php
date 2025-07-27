@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reservation;
+use App\Models\User;
 use App\Models\Table;
+use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
+use App\Mail\ReservationConfirmed;
+use App\Mail\ReservationCancelled;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewReservationNotification;
 
 class ReservationController extends Controller
 {
@@ -80,7 +86,13 @@ class ReservationController extends Controller
         if (Auth::check()) {
             $validatedData['user_id'] = Auth::id();
         }
+
         $reservation = Reservation::create($validatedData);
+
+        // Notify the admins
+        $admins = User::where('role', 'admin')->get();
+        Notification::send($admins, new NewReservationNotification($reservation));
+
         Log::info('New reservation created: ' . $reservation->id);
 
         return redirect()->route('reservations.index')
@@ -166,6 +178,10 @@ class ReservationController extends Controller
         }
 
         $reservation->cancel($request->input('reason'));
+
+        // Send the cancellation email
+        Mail::to($reservation->customer_email)->send(new ReservationCancelled($reservation));
+
         Log::info('Reservation cancelled: ' . $reservation->id);
 
         return redirect()->route('reservations.index')
@@ -182,6 +198,10 @@ class ReservationController extends Controller
         }
 
         $reservation->confirm();
+
+        // Send the confirmation email
+        Mail::to($reservation->customer_email)->send(new ReservationConfirmed($reservation));
+
         Log::info('Reservation confirmed: ' . $reservation->id);
 
         return back()->with('success', 'Réservation confirmée avec succès.');

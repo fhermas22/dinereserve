@@ -17,7 +17,11 @@ class TableFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => 'Table ' . $this->faker->unique()->numberBetween(1, 50),
+            'capacity' => $this->faker->numberBetween(2, 8),
+            'location' => $this->faker->randomElement(['Terrasse', 'Salon', 'Bar', 'Jardin']),
+            'description' => $this->faker->sentence(),
+            'is_available' => $this->faker->boolean(80),
         ];
     }
 }
