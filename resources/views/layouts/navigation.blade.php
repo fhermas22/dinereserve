@@ -17,12 +17,14 @@
                         {{ __('Tableau de bord') }}
                     </x-nav-link>
 
+                    @if(Auth::user()->isCustomer())
                     <x-nav-link :href="route('reservations.index')" :active="request()->routeIs('reservations.*')">
                         {{ __('Mes Réservations') }}
                     </x-nav-link>
                     <x-nav-link :href="route('reservations.create')" :active="request()->routeIs('reservations.create')">
                         {{ __('Nouvelle Réservation') }}
                     </x-nav-link>
+                    @endif
 
                     @can('admin')
                     <x-nav-link :href="route('tables.index')" :active="request()->routeIs('tables.*')">

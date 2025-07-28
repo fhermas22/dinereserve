@@ -37,7 +37,7 @@
                         </div>
                         <div class="flex items-end">
                             <button type="submit" class="btn btn-primary mr-2">Filtrer</button>
-                            <a href="{{ route('admin.reservations.index') }}" class="btn btn-secondary">Reset</a>
+                            <a href="{{ route('admin.reservations.index') }}" class="btn btn-secondary">Réinitialiser</a>
                         </div>
                     </form>
                 </div>

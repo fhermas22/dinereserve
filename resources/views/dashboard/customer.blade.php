@@ -70,16 +70,19 @@
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Réservations Récentes</h3>
 
                     @forelse($pastReservations as $reservation)
-                    <div class="border-b border-gray-200 pb-3 mb-3 last:border-b-0 last:pb-0 last:mb-0">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-medium">Table {{ $reservation->table->name }}</p>
-                                <p class="text-sm text-gray-600">{{ $reservation->formatted_date_time }}</p>
-                                <p class="text-sm text-gray-600">{{ $reservation->party_size }} personnes</p>
+                        @if (Auth::id() === $reservation->user_id)
+                            <div class="border-b border-gray-200 pb-3 mb-3 last:border-b-0 last:pb-0 last:mb-0">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-medium">Table {{ $reservation->table->name }}</p>
+                                        <p class="text-sm text-gray-600">{{ $reservation->formatted_date_time }}</p>
+                                        <p class="text-sm text-gray-600">{{ $reservation->party_size }} personnes</p>
+                                    </div>
+                                    <x-status-badge :status="$reservation->status" />
+                                </div>
                             </div>
-                            <x-status-badge :status="$reservation->status" />
-                        </div>
-                    </div>
+                        @endif
+
                     @empty
                     <p class="text-gray-500">Aucune réservation passée.</p>
                     @endforelse

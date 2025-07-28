@@ -42,6 +42,7 @@
                     </div>
                     <div class="form-group">
                         <div class="flex items-center">
+                            <input type="hidden" name="is_available" value="0">
                             <input type="checkbox" id="is_available" name="is_available" value="1" class="h-4 w-4 text-primary-600 border-gray-300 rounded" {{ old('is_available', true) ? 'checked' : '' }}>
                             <label for="is_available" class="ml-2 block text-sm text-gray-900">Table disponible</label>
                         </div>

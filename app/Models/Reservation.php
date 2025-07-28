@@ -56,8 +56,8 @@ class Reservation extends Model
      */
     public function canBeCancelled(): bool
     {
-        return in_array($this->status, ['pending', 'confirmed']) &&
-            Carbon::parse($this->reservation_date . ' ' . $this->reservation_time)->isFuture();
+        $reservationDateTime = $this->reservation_date->setTimeFrom($this->reservation_time);
+        return in_array($this->status, ['pending', 'confirmed']) && $reservationDateTime->isFuture();
     }
 
     /**
