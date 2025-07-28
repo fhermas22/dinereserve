@@ -92,6 +92,7 @@ Follow these steps to set up the project locally:
     An administrator user will be created with the credentials:
     - Email: `admin@dinereserve.com`
     - Password: `password`
+    
     A client user will be created with the credentials:
     - Email: `client@dinereserve.com`
     - Password: `password`
